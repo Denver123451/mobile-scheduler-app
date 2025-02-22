@@ -38,6 +38,9 @@ const styles = StyleSheet.create({
   picker: {
     color: Colors.grey800,
   },
+  repeatWrapper: {
+    marginTop: 8,
+  },
 });
 
 export default styles;

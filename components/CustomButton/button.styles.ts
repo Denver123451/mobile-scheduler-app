@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
   saveButton: {
     backgroundColor: Colors.yellow500,
     paddingVertical: 14,
-    marginTop: 50,
+    marginTop: 16,
     borderRadius: 8,
     alignItems: 'center',
   },

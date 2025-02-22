@@ -78,23 +78,15 @@ export const CustomForm = ({ props }: ICustomFormProps) => {
           />
         </View>
       </View>
-
-      <Text style={styles.label}>Repeat</Text>
-      <View style={styles.pickerContainer}>
-        <Picker
-          selectedValue={repeat}
-          onValueChange={(itemValue) => setRepeat(itemValue)}
-          style={styles.picker}
-        >
-          {repeatOptions.map((option) => (
-            <Picker.Item
-              key={option.value}
-              label={option.label}
-              value={option.value}
-            />
-          ))}
-        </Picker>
+      <View style={styles.repeatWrapper}>
+        <Text style={styles.label}>Repeat</Text>
+        <CustomTimePicker
+          value={repeat}
+          onChange={setRepeat}
+          pickerItems={repeatOptions}
+        />
       </View>
+
       <CustomButton buttonText="Save" onPress={handleSave} />
     </View>
   );
