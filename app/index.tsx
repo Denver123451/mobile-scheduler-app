@@ -1,20 +1,58 @@
-import { StyleSheet, View, Text, TextInput } from 'react-native';
+import { View, Text, TextInput, Pressable } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import Colors from '@/constants/colors';
 import { useState } from 'react';
 import { calendarTheme } from '@/constants/calendarTheme';
+import { Picker } from '@react-native-picker/picker';
+import { timeOptions } from '@/constants/timeOptions';
+import { repeatOptions } from '@/constants/repeatOptions';
+import styles from './index.styles';
+import MaskInput from 'react-native-mask-input';
+import { isValidDateTimeRange } from '@/scripts/isValidDateRange';
 
 export default function HomeScreen() {
   const [selectedDate, setSelectedDate] = useState('');
   const [eventName, setEventName] = useState('');
+  const [startDay, setStartDay] = useState('');
   const [startTime, setStartTime] = useState('');
+  const [endDay, setEndDay] = useState('');
   const [endTime, setEndTime] = useState('');
-  const [repeat, setRepeat] = useState('weekly');
+  const [repeat, setRepeat] = useState('');
 
   const handleDayPress = (day: any) => {
-    setSelectedDate(day.dateString);
-    console.log('Выбрана дата:', selectedDate);
+    const newDate = day.dateString;
+    setSelectedDate(newDate);
+    console.log('Выбрана дата:', newDate);
   };
+
+  const handleSave = () => {
+    if (eventName === '') {
+      alert('Enter name');
+      return;
+    }
+
+    const { valid, error } = isValidDateTimeRange(
+      startDay,
+      endDay,
+      startTime,
+      endTime,
+    );
+    if (!valid) {
+      alert(error);
+      return;
+    }
+
+    console.log({
+      eventName,
+      selectedDate,
+      startDay,
+      startTime,
+      endDay,
+      endTime,
+      repeat,
+    });
+  };
+
   return (
     <>
       <View style={styles.titleContainer}>
@@ -40,50 +78,84 @@ export default function HomeScreen() {
             placeholder="Every Name"
           />
 
-          <View>
+          <View style={styles.rowWrapper}>
             <Text style={styles.label}>Starts</Text>
-            <TextInput
-              style={styles.input}
-              value={startTime}
-              onChangeText={setStartTime}
-              placeholder="Jan 28, 2025 03:00 PM"
-            />
+            <View style={styles.inputsWrapper}>
+              <MaskInput
+                style={styles.input}
+                value={startDay}
+                onChangeText={(masked) => setStartDay(masked)}
+                mask={[/\d/, /\d/, '/', /\d/, /\d/]}
+                placeholder="DD/MM"
+              />
+              <View style={styles.pickerWrapper}>
+                <Picker
+                  selectedValue={endTime}
+                  onValueChange={(itemValue) => setStartTime(itemValue)}
+                  style={styles.timePecker}
+                >
+                  {timeOptions.map((option) => (
+                    <Picker.Item
+                      key={option.value}
+                      label={option.label}
+                      value={option.value}
+                    />
+                  ))}
+                </Picker>
+              </View>
+            </View>
+          </View>
+
+          <View style={styles.rowWrapper}>
+            <Text style={styles.label}>Ends</Text>
+            <View style={styles.inputsWrapper}>
+              <MaskInput
+                style={styles.input}
+                value={endDay}
+                onChangeText={(masked) => setEndDay(masked)}
+                mask={[/\d/, /\d/, '/', /\d/, /\d/]}
+                placeholder="DD/MM"
+              />
+              <View style={styles.pickerWrapper}>
+                <Picker
+                  selectedValue={endTime}
+                  onValueChange={(itemValue) => setEndTime(itemValue)}
+                  style={styles.timePecker}
+                >
+                  {timeOptions.map((option) => (
+                    <Picker.Item
+                      key={option.value}
+                      label={option.label}
+                      value={option.value}
+                    />
+                  ))}
+                </Picker>
+              </View>
+            </View>
+          </View>
+
+          <Text style={styles.label}>Repeat</Text>
+          <View style={styles.pickerContainer}>
+            <Picker
+              selectedValue={repeat}
+              onValueChange={(itemValue) => setRepeat(itemValue)}
+              style={styles.picker}
+            >
+              {repeatOptions.map((option) => (
+                <Picker.Item
+                  key={option.value}
+                  label={option.label}
+                  value={option.value}
+                />
+              ))}
+            </Picker>
           </View>
         </View>
+
+        <Pressable style={styles.saveButton} onPress={handleSave}>
+          <Text style={styles.saveButtonText}>SAVE</Text>
+        </Pressable>
       </View>
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  titleContainer: {
-    flex: 1,
-    paddingTop: 50,
-    paddingHorizontal: 16,
-  },
-  title: {
-    textAlign: 'center',
-    paddingBottom: 24,
-    color: Colors.yellow500,
-    fontSize: 24,
-  },
-  calendar: {
-    borderRadius: 10,
-  },
-  form: {
-    marginTop: 16,
-    paddingHorizontal: 16,
-  },
-  label: {
-    marginTop: 12,
-    marginBottom: 4,
-    fontWeight: '600',
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: Colors.grey500,
-    borderRadius: 8,
-    paddingVertical: 8,
-    fontSize: 16,
-  },
-});
