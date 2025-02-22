@@ -1,6 +1,5 @@
 import styles from './form.styles';
 import { Text, TextInput, View } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
 import { timeOptions } from '@/constants/timeOptions';
 import { repeatOptions } from '@/constants/repeatOptions';
 import { useState } from 'react';
