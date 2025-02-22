@@ -27,3 +27,17 @@ export interface ICustomTimePickerProps {
     value: string;
   }[];
 }
+
+export interface IEvent {
+  id: any;
+  eventName: string;
+  startDay: string;
+  startTime: string;
+  endDay: string;
+  endTime: string;
+  repeat?: string;
+}
+
+export interface IEventState {
+  events: IEvent[];
+}
