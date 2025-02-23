@@ -2,7 +2,7 @@ import styles from '@/app/index.styles';
 import { Text, View, Pressable } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { CustomButton } from '@/components/CustomButton/CustomButton';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import type { RootState } from '@/store/store';
 import { CustomForm } from '@/components/CustomForm/CustomForm';
 
