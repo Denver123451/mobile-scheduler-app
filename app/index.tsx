@@ -13,7 +13,7 @@ export default function HomeScreen() {
   const router = useRouter();
 
   const handleDayPress = (day: any) => {
-    const newDate = day.dateString;
+    const newDate = day.timestamp;
     setSelectedDate(newDate);
     router.push(`/${newDate}`);
   };

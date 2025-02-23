@@ -5,6 +5,7 @@ import { CustomButton } from '@/components/CustomButton/CustomButton';
 import type { RootState } from '@/store/store';
 import { useSelector } from 'react-redux';
 import { EventsFlatList } from '@/components/EventsFlatList/EventsFlatList';
+import { filterEventsByDate } from '@/scripts/isValidDateRange';
 
 export default function DateScreen() {
   const router = useRouter();
@@ -15,12 +16,16 @@ export default function DateScreen() {
 
   const { date } = useLocalSearchParams();
 
+  const targetDate = new Date(+date).toDateString();
+
   const events = useSelector((state: RootState) => state.events.events);
+
+  const filteredEvents = filterEventsByDate(+date, events);
 
   return (
     <View style={styles.titleContainer}>
-      <Text style={styles.title}>Events for date: {date}</Text>
-      <EventsFlatList events={events} />
+      <Text style={styles.title}>Events for date: {targetDate}</Text>
+      <EventsFlatList events={filteredEvents} />
       <CustomButton buttonText="Return to main page" onPress={handleBack} />
     </View>
   );

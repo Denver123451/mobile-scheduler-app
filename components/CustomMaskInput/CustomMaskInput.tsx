@@ -8,8 +8,8 @@ export const CustomMaskInput = ({ value, onChange }: ICustomMaskInputProps) => {
       style={styles.input}
       value={value}
       onChangeText={(masked) => onChange(masked)}
-      mask={[/\d/, /\d/, '/', /\d/, /\d/]}
-      placeholder="DD/MM"
+      mask={[/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/]}
+      placeholder="MM/DD/YYYY"
     />
   );
 };

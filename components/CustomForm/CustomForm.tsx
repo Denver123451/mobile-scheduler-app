@@ -8,8 +8,8 @@ import { ICustomFormProps } from '@/types/types';
 import { CustomButton } from '@/components/CustomButton/CustomButton';
 import { CustomMaskInput } from '@/components/CustomMaskInput/CustomMaskInput';
 import { CustomTimePicker } from '@/components/CustomTimePicker/CustomTimePicker';
-import { useDispatch } from 'react-redux';
-import type { AppDispatch } from '@/store/store';
+import { useDispatch, useSelector } from 'react-redux';
+import type { AppDispatch, RootState } from '@/store/store';
 import { addEvent } from '@/store/eventSlice';
 import { useRouter } from 'expo-router';
 import { updateEvent } from '@/store/eventSlice';
@@ -17,6 +17,8 @@ import { updateEvent } from '@/store/eventSlice';
 export const CustomForm = ({ props, isEdit }: ICustomFormProps) => {
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
+
+  const events = useSelector((state: RootState) => state.events.events);
 
   const [eventName, setEventName] = useState(props.eventName);
   const [startDay, setStartDay] = useState(props.startDay);
@@ -37,6 +39,7 @@ export const CustomForm = ({ props, isEdit }: ICustomFormProps) => {
       endDay,
       startTime,
       endTime,
+      events,
     );
     if (!valid) {
       alert(error);
@@ -55,12 +58,12 @@ export const CustomForm = ({ props, isEdit }: ICustomFormProps) => {
       }),
     );
     alert('Event successfully added');
-    setEventName('');
-    setStartDay('');
-    setStartTime('');
-    setEndDay('');
-    setEndTime('');
-    setRepeat('');
+    // setEventName('');
+    // setStartDay('');
+    // setStartTime('');
+    // setEndDay('');
+    // setEndTime('');
+    // setRepeat('');
   };
 
   const handleEdit = () => {
@@ -74,6 +77,7 @@ export const CustomForm = ({ props, isEdit }: ICustomFormProps) => {
       endDay,
       startTime,
       endTime,
+      events,
     );
     if (!valid) {
       alert(error);
