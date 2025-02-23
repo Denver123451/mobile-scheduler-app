@@ -13,13 +13,13 @@ const eventSlice = createSlice({
       state.events.push(action.payload);
       console.log(state.events);
     },
-    // removeEvent(state, action: PayloadAction<string>) {
-    //   state.events = state.events.filter(
-    //     (event) => event.id !== action.payload,
-    //   );
-    // },
+    removeEvent(state, action: PayloadAction<string>) {
+      state.events = state.events.filter(
+        (event) => event.id !== action.payload,
+      );
+    },
   },
 });
 
-export const { addEvent } = eventSlice.actions;
+export const { addEvent, removeEvent } = eventSlice.actions;
 export default eventSlice.reducer;

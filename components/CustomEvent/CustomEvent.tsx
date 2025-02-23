@@ -2,6 +2,8 @@ import { View, Text } from 'react-native';
 import { IEvent } from '@/types/types';
 import styles from './event.styles';
 import { CustomButton } from '@/components/CustomButton/CustomButton';
+import { useDispatch } from 'react-redux';
+import { removeEvent } from '@/store/eventSlice';
 
 export const CustomEvent = ({
   id,
@@ -11,8 +13,11 @@ export const CustomEvent = ({
   endTime,
   startTime,
 }: IEvent) => {
+  const dispatch = useDispatch();
+
   const deleteHandler = () => {
-    console.log(`delete ${id})`);
+    // console.log(`delete ${id})`);
+    dispatch(removeEvent(id));
   };
 
   const updateHandler = () => {
