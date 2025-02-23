@@ -6,6 +6,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 50,
     paddingHorizontal: 16,
+    paddingBottom: 8,
   },
   title: {
     textAlign: 'center',

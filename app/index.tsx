@@ -6,14 +6,16 @@ import { calendarTheme } from '@/constants/calendarTheme';
 import styles from './index.styles';
 import { CustomForm } from '@/components/CustomForm/CustomForm';
 import { customFormDefaultProps } from '@/constants/customFormDefaultProps';
+import { useRouter } from 'expo-router';
 
 export default function HomeScreen() {
   const [selectedDate, setSelectedDate] = useState('');
+  const router = useRouter();
 
   const handleDayPress = (day: any) => {
     const newDate = day.dateString;
     setSelectedDate(newDate);
-    console.log('Выбрана дата:', newDate);
+    router.push(`/${newDate}`);
   };
 
   return (

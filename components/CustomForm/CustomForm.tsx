@@ -8,12 +8,11 @@ import { ICustomFormProps } from '@/types/types';
 import { CustomButton } from '@/components/CustomButton/CustomButton';
 import { CustomMaskInput } from '@/components/CustomMaskInput/CustomMaskInput';
 import { CustomTimePicker } from '@/components/CustomTimePicker/CustomTimePicker';
-import { useSelector, useDispatch } from 'react-redux';
-import type { RootState, AppDispatch } from '@/store/store';
+import { useDispatch } from 'react-redux';
+import type { AppDispatch } from '@/store/store';
 import { addEvent } from '@/store/eventSlice';
 
 export const CustomForm = ({ props }: ICustomFormProps) => {
-  const events = useSelector((state: RootState) => state.events.events);
   const dispatch = useDispatch<AppDispatch>();
 
   const [eventName, setEventName] = useState(props.eventName);
