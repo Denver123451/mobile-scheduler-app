@@ -7,6 +7,7 @@ export interface ICustomFormProps {
     endTime: string;
     id?: number;
   };
+  isEdit?: boolean;
 }
 
 export interface ICustomButtonProps {

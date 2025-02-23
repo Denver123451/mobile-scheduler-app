@@ -8,8 +8,10 @@ const styles = StyleSheet.create({
     marginTop: 16,
     borderRadius: 8,
     alignItems: 'center',
+    cursor: 'pointer',
   },
   saveButtonText: {
+    paddingHorizontal: 4,
     color: '#fff',
     fontWeight: '600',
     fontSize: 16,

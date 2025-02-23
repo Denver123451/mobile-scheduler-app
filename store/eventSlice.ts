@@ -11,15 +11,20 @@ const eventSlice = createSlice({
   reducers: {
     addEvent(state, action: PayloadAction<IEvent>) {
       state.events.push(action.payload);
-      console.log(state.events);
     },
     removeEvent(state, action: PayloadAction<string>) {
       state.events = state.events.filter(
         (event) => event.id !== action.payload,
       );
     },
+    updateEvent(state, action: PayloadAction<IEvent>) {
+      const index = state.events.findIndex((ev) => ev.id === action.payload.id);
+      if (index !== -1) {
+        state.events[index] = action.payload;
+      }
+    },
   },
 });
 
-export const { addEvent, removeEvent } = eventSlice.actions;
+export const { addEvent, removeEvent, updateEvent } = eventSlice.actions;
 export default eventSlice.reducer;

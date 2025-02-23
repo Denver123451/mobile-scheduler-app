@@ -4,6 +4,7 @@ import styles from './event.styles';
 import { CustomButton } from '@/components/CustomButton/CustomButton';
 import { useDispatch } from 'react-redux';
 import { removeEvent } from '@/store/eventSlice';
+import { useRouter } from 'expo-router';
 
 export const CustomEvent = ({
   id,
@@ -14,14 +15,14 @@ export const CustomEvent = ({
   startTime,
 }: IEvent) => {
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const deleteHandler = () => {
-    // console.log(`delete ${id})`);
     dispatch(removeEvent(id));
   };
 
   const updateHandler = () => {
-    console.log(`update ${id})`);
+    router.push(`/edit/${id}`);
   };
 
   return (

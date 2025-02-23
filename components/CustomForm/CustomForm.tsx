@@ -11,9 +11,12 @@ import { CustomTimePicker } from '@/components/CustomTimePicker/CustomTimePicker
 import { useDispatch } from 'react-redux';
 import type { AppDispatch } from '@/store/store';
 import { addEvent } from '@/store/eventSlice';
+import { useRouter } from 'expo-router';
+import { updateEvent } from '@/store/eventSlice';
 
-export const CustomForm = ({ props }: ICustomFormProps) => {
+export const CustomForm = ({ props, isEdit }: ICustomFormProps) => {
   const dispatch = useDispatch<AppDispatch>();
+  const router = useRouter();
 
   const [eventName, setEventName] = useState(props.eventName);
   const [startDay, setStartDay] = useState(props.startDay);
@@ -21,6 +24,7 @@ export const CustomForm = ({ props }: ICustomFormProps) => {
   const [endDay, setEndDay] = useState(props.endDay);
   const [endTime, setEndTime] = useState(props.endTime);
   const [repeat, setRepeat] = useState('');
+  const id = props?.id;
 
   const handleSave = () => {
     if (eventName === '') {
@@ -57,6 +61,36 @@ export const CustomForm = ({ props }: ICustomFormProps) => {
     setEndDay('');
     setEndTime('');
     setRepeat('');
+  };
+
+  const handleEdit = () => {
+    if (eventName === '') {
+      alert('Enter name');
+      return;
+    }
+
+    const { valid, error } = isValidDateTimeRange(
+      startDay,
+      endDay,
+      startTime,
+      endTime,
+    );
+    if (!valid) {
+      alert(error);
+      return;
+    }
+
+    dispatch(
+      updateEvent({
+        eventName,
+        startDay,
+        startTime,
+        endDay,
+        endTime,
+        id,
+      }),
+    );
+    router.push(`/`);
   };
 
   return (
@@ -101,7 +135,11 @@ export const CustomForm = ({ props }: ICustomFormProps) => {
         />
       </View>
 
-      <CustomButton buttonText="Save" onPress={handleSave} />
+      {isEdit ? (
+        <CustomButton buttonText="Edit" onPress={handleEdit} />
+      ) : (
+        <CustomButton buttonText="Save" onPress={handleSave} />
+      )}
     </View>
   );
 };
