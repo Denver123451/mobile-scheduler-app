@@ -25,7 +25,12 @@ export default function DateScreen() {
   return (
     <View style={styles.titleContainer}>
       <Text style={styles.title}>Events for date: {targetDate}</Text>
-      <EventsFlatList events={filteredEvents} />
+      {filteredEvents.length === 0 ? (
+        <Text style={styles.text}>No events for this day</Text>
+      ) : (
+        <EventsFlatList events={filteredEvents} />
+      )}
+
       <CustomButton buttonText="Return to main page" onPress={handleBack} />
     </View>
   );

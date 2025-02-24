@@ -14,6 +14,11 @@ const styles = StyleSheet.create({
     color: Colors.yellow500,
     fontSize: 24,
   },
+  text: {
+    paddingBottom: 24,
+    color: Colors.grey800,
+    fontSize: 24,
+  },
   calendar: {
     borderRadius: 10,
   },
