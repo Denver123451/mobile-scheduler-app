@@ -6,7 +6,7 @@ import { useRouter } from 'expo-router';
 import { isValidDateTimeRange } from '@/scripts/isValidDateRange';
 import { ICustomFormProps } from '@/types/types';
 
-export const useCustomFormLogic = ({ props, isEdit }: ICustomFormProps) => {
+export const useCustomFormLogic = ({ props }: ICustomFormProps) => {
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
   const events = useSelector((state: RootState) => state.events.events);
