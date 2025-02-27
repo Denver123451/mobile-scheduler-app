@@ -1,101 +1,30 @@
-import styles from './form.styles';
-import { Text, TextInput, View } from 'react-native';
+import { View, Text, TextInput } from 'react-native';
 import { timeOptions } from '@/constants/timeOptions';
 import { repeatOptions } from '@/constants/repeatOptions';
-import { useState } from 'react';
-import { isValidDateTimeRange } from '@/scripts/isValidDateRange';
-import { ICustomFormProps } from '@/types/types';
+import styles from './form.styles';
 import { CustomButton } from '@/components/CustomButton/CustomButton';
 import { CustomMaskInput } from '@/components/CustomMaskInput/CustomMaskInput';
 import { CustomTimePicker } from '@/components/CustomTimePicker/CustomTimePicker';
-import { useDispatch, useSelector } from 'react-redux';
-import type { AppDispatch, RootState } from '@/store/store';
-import { addEvent } from '@/store/eventSlice';
-import { useRouter } from 'expo-router';
-import { updateEvent } from '@/store/eventSlice';
+import { useCustomFormLogic } from '@/hooks/useCustomFormLogic';
+import { ICustomFormProps } from '@/types/types';
 
 export const CustomForm = ({ props, isEdit }: ICustomFormProps) => {
-  const dispatch = useDispatch<AppDispatch>();
-  const router = useRouter();
-
-  const events = useSelector((state: RootState) => state.events.events);
-
-  const [eventName, setEventName] = useState(props.eventName);
-  const [startDay, setStartDay] = useState(props.startDay);
-  const [startTime, setStartTime] = useState(props.startTime);
-  const [endDay, setEndDay] = useState(props.endDay);
-  const [endTime, setEndTime] = useState(props.endTime);
-  const [repeat, setRepeat] = useState('');
-  const id = props?.id;
-
-  const handleSave = () => {
-    if (eventName === '') {
-      alert('Enter name');
-      return;
-    }
-
-    const { valid, error } = isValidDateTimeRange(
-      startDay,
-      endDay,
-      startTime,
-      endTime,
-      events,
-    );
-    if (!valid) {
-      alert(error);
-      return;
-    }
-
-    dispatch(
-      addEvent({
-        id: Date.now(),
-        eventName: eventName,
-        startDay: startDay,
-        startTime: startTime,
-        endDay: endDay,
-        endTime: endTime,
-        repeat: repeat,
-      }),
-    );
-    alert('Event successfully added');
-    // setEventName('');
-    // setStartDay('');
-    // setStartTime('');
-    // setEndDay('');
-    // setEndTime('');
-    // setRepeat('');
-  };
-
-  const handleEdit = () => {
-    if (eventName === '') {
-      alert('Enter name');
-      return;
-    }
-
-    const { valid, error } = isValidDateTimeRange(
-      startDay,
-      endDay,
-      startTime,
-      endTime,
-      events,
-    );
-    if (!valid) {
-      alert(error);
-      return;
-    }
-
-    dispatch(
-      updateEvent({
-        eventName,
-        startDay,
-        startTime,
-        endDay,
-        endTime,
-        id,
-      }),
-    );
-    router.push(`/`);
-  };
+  const {
+    eventName,
+    setEventName,
+    startDay,
+    setStartDay,
+    startTime,
+    setStartTime,
+    endDay,
+    setEndDay,
+    endTime,
+    setEndTime,
+    repeat,
+    setRepeat,
+    handleSave,
+    handleEdit,
+  } = useCustomFormLogic({ props, isEdit });
 
   return (
     <View style={styles.form}>
@@ -104,7 +33,7 @@ export const CustomForm = ({ props, isEdit }: ICustomFormProps) => {
         style={styles.input}
         value={eventName}
         onChangeText={setEventName}
-        placeholder="Every Name"
+        placeholder="Event Name"
       />
 
       <View style={styles.rowWrapper}>
@@ -130,6 +59,7 @@ export const CustomForm = ({ props, isEdit }: ICustomFormProps) => {
           />
         </View>
       </View>
+
       <View style={styles.repeatWrapper}>
         <Text style={styles.label}>Repeat</Text>
         <CustomTimePicker

@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IEvent, IEventState } from '@/types/types';
+import { IEvent, IStoreEventState } from '@/types/types';
 
-const initialState: IEventState = {
+const initialState: IStoreEventState = {
   events: [],
 };
 

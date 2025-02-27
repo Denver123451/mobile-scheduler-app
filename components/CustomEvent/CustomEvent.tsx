@@ -5,6 +5,7 @@ import { CustomButton } from '@/components/CustomButton/CustomButton';
 import { useDispatch } from 'react-redux';
 import { removeEvent } from '@/store/eventSlice';
 import { useRouter } from 'expo-router';
+import { addDays, diffDates, parseDateTime } from '@/scripts/isValidDateRange';
 
 export const CustomEvent = ({
   id,
@@ -13,6 +14,8 @@ export const CustomEvent = ({
   endDay,
   endTime,
   startTime,
+  targetDate,
+  repeat,
 }: IEvent) => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -25,6 +28,17 @@ export const CustomEvent = ({
     router.push(`/edit/${id}`);
   };
 
+  let repeatDateToView = 0;
+  if (repeat !== '') {
+    repeatDateToView = diffDates(
+      targetDate ?? parseDateTime(startDay, startTime).getDate(),
+      parseDateTime(startDay, startTime),
+    );
+  }
+
+  const start = addDays(parseDateTime(startDay, startTime), repeatDateToView);
+  const end = addDays(parseDateTime(endDay, endTime), repeatDateToView);
+
   return (
     <View style={styles.eventItem}>
       <View>
@@ -33,11 +47,11 @@ export const CustomEvent = ({
         </View>
 
         <Text style={styles.eventText}>
-          Start : {startDay} {startTime}
+          Start : {start} {startTime}
         </Text>
 
         <Text style={styles.eventText}>
-          End : {endDay} {endTime}
+          End : {end} {endTime}
         </Text>
       </View>
 

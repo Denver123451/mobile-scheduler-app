@@ -16,6 +16,9 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     fontSize: 16,
   },
+  pressed: {
+    opacity: 0.75,
+  },
 });
 
 export default styles;

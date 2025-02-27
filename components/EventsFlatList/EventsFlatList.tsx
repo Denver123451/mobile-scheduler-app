@@ -2,8 +2,9 @@ import { View, FlatList } from 'react-native';
 import styles from './flatList.styles';
 import { IEventState } from '@/types/types';
 import { CustomEvent } from '@/components/CustomEvent/CustomEvent';
+import { diffDates } from '@/scripts/isValidDateRange';
 
-export const EventsFlatList = ({ events }: IEventState) => {
+export const EventsFlatList = ({ events, date }: IEventState) => {
   return (
     <View style={styles.eventsContainer}>
       <FlatList
@@ -17,6 +18,7 @@ export const EventsFlatList = ({ events }: IEventState) => {
               endTime={itemData.item.endTime}
               startDay={itemData.item.startDay}
               startTime={itemData.item.startTime}
+              targetDate={date}
             />
           );
         }}

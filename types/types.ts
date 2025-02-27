@@ -37,8 +37,14 @@ export interface IEvent {
   endDay: string;
   endTime: string;
   repeat?: string;
+  targetDate?: number;
 }
 
 export interface IEventState {
+  events: IEvent[];
+  date: any;
+}
+
+export interface IStoreEventState {
   events: IEvent[];
 }

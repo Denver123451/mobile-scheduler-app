@@ -5,7 +5,21 @@ function isValidTime(time: string): boolean {
   return timePattern.test(time);
 }
 
-function parseDateTime(date: string, time: string): Date {
+export function addDays(date: Date, days?: number) {
+  const result = new Date(date);
+  if (days) {
+    result.setDate(result.getDate() + days);
+  }
+
+  const options: Intl.DateTimeFormatOptions = {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  };
+  return result.toLocaleDateString('en-US', options);
+}
+
+export function parseDateTime(date: string, time: string): Date {
   const [month, day, year] = date.split('/').map(Number);
   const [timeString, modifier] = time.split(' ');
   let [hours, minutes] = timeString.split(':').map(Number);
@@ -44,6 +58,13 @@ function isEventOnTargetDate(
   return eventStart <= endOfDay && eventEnd >= startOfDay;
 }
 
+export function diffDates(timestamp: number, eventStartNoTime: Date): number {
+  eventStartNoTime.setHours(0, 0, 0, 0);
+  return Math.floor(
+    (timestamp - eventStartNoTime.getTime()) / (1000 * 60 * 60 * 24),
+  );
+}
+
 export function filterEventsByDate(
   timestamp: number,
   events: IEvent[],
@@ -52,14 +73,15 @@ export function filterEventsByDate(
 
   return events.filter((event) => {
     const eventStart = parseDateTime(event.startDay, event.startTime);
+    const eventStartNoTime = parseDateTime(event.startDay, event.startTime);
+    eventStartNoTime.setHours(0, 0, 0, 0);
     const eventEnd = parseDateTime(event.endDay, event.endTime);
 
-    // Calculate the difference in days between the target date and the event start date
     const diffDays = Math.floor(
-      (targetDate.getTime() - eventStart.getTime()) / (1000 * 60 * 60 * 24),
+      (targetDate.getTime() - eventStartNoTime.getTime()) /
+        (1000 * 60 * 60 * 24),
     );
 
-    // Check if the target date falls within the event duration or repeats on the target date
     let isEventOnTargetDateFlag = false;
     switch (event.repeat) {
       case 'weekly':
@@ -81,7 +103,7 @@ export function filterEventsByDate(
     }
 
     return (
-      isEventOnTargetDateFlag &&
+      isEventOnTargetDateFlag ||
       isEventOnTargetDate(eventStart, eventEnd, targetDate)
     );
   });
@@ -124,3 +146,15 @@ export const isValidDateTimeRange = (
 
   return { valid: false, error: 'Date range is incorrect' };
 };
+
+export function parseDate(mmddyyyy: string): Date {
+  const [month, day, year] = mmddyyyy.split('/');
+  return new Date(Number(year), Number(month) - 1, Number(day));
+}
+
+export function formatDate(date: Date): string {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
+}

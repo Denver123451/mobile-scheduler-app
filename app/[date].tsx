@@ -15,7 +15,6 @@ export default function DateScreen() {
   };
 
   const { date } = useLocalSearchParams();
-
   const targetDate = new Date(+date).toDateString();
 
   const events = useSelector((state: RootState) => state.events.events);
@@ -28,7 +27,7 @@ export default function DateScreen() {
       {filteredEvents.length === 0 ? (
         <Text style={styles.text}>No events for this day</Text>
       ) : (
-        <EventsFlatList events={filteredEvents} />
+        <EventsFlatList events={filteredEvents} date={date} />
       )}
 
       <CustomButton buttonText="Return to main page" onPress={handleBack} />

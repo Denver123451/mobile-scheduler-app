@@ -1,5 +1,6 @@
 const Colors = {
   yellow500: '#F8C31B',
+  yellow700: '#daa915',
   grey500: '#b6c1cd',
   grey800: '#2d4150',
   grey300: '#d9e1e8',
