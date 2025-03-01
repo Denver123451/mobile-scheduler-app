@@ -3,10 +3,11 @@ import { timeOptions } from '@/constants/timeOptions';
 import { repeatOptions } from '@/constants/repeatOptions';
 import styles from './form.styles';
 import { CustomButton } from '@/components/CustomButton/CustomButton';
-import { CustomMaskInput } from '@/components/CustomMaskInput/CustomMaskInput';
+
 import { CustomTimePicker } from '@/components/CustomTimePicker/CustomTimePicker';
 import { useCustomFormLogic } from '@/hooks/useCustomFormLogic';
 import { ICustomFormProps } from '@/types/types';
+import { CustomDatePicker } from '@/components/CustomMaskInput/CustomDatePicker';
 
 export const CustomForm = ({ props, isEdit }: ICustomFormProps) => {
   const {
@@ -39,7 +40,7 @@ export const CustomForm = ({ props, isEdit }: ICustomFormProps) => {
       <View style={styles.rowWrapper}>
         <Text style={styles.label}>Starts</Text>
         <View style={styles.inputsWrapper}>
-          <CustomMaskInput value={startDay} onChange={setStartDay} />
+          <CustomDatePicker value={startDay} onChange={setStartDay} />
           <CustomTimePicker
             value={startTime}
             onChange={setStartTime}
@@ -51,7 +52,7 @@ export const CustomForm = ({ props, isEdit }: ICustomFormProps) => {
       <View style={styles.rowWrapper}>
         <Text style={styles.label}>Ends</Text>
         <View style={styles.inputsWrapper}>
-          <CustomMaskInput value={endDay} onChange={setEndDay} />
+          <CustomDatePicker value={endDay} onChange={setEndDay} />
           <CustomTimePicker
             value={endTime}
             onChange={setEndTime}

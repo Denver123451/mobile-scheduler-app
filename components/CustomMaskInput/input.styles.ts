@@ -9,6 +9,8 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     fontSize: 16,
     minWidth: 120,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

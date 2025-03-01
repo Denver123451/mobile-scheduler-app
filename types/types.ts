@@ -15,7 +15,7 @@ export interface ICustomButtonProps {
   onPress: () => void;
 }
 
-export interface ICustomMaskInputProps {
+export interface ICustomDatePickerProps {
   value: string;
   onChange: (maskedValue: string) => void;
 }
